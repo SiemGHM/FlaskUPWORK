@@ -478,7 +478,7 @@ def process_image():
 
 #         # Convert processed image to base64 string
 #         with open(processed_image_path, "rb") as img_file:
-#             encoded_string = base64.b64encode(img_file.read()).decode('utf-8')
+#             encoded_string = base64.b64encode(img_file.read()).decode('utf-8') apshaiderbukhari786@gmail.com
 
 #         # Return JSON response with message and processed image data
 #         return jsonify({'message': 'Image processed and saved successfully', 'image_data': encoded_string}), 200
@@ -489,4 +489,5 @@ def show_processed_image(filename):
     return send_file(os.path.join(app.root_path, 'tumor_1', filename), mimetype='image/jpg')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 5000))  # Default to 5000 if $PORT not set
+    app.run(host='0.0.0.0', port=port)
