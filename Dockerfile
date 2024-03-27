@@ -22,10 +22,11 @@ RUN pip install --no-cache-dir -r requirements.txt --verbose
 
 
 # Make port 80 available to the world outside this container
-EXPOSE 8080
+EXPOSE 5000
 
 # Define environment variable
 ENV NAME World
 
 # Default command
-CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0" , "--port=5000"]
+CMD ["gunicorn", "app:app", "--config", "config/gunicorn.py"]
+
