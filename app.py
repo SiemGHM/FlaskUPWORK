@@ -285,6 +285,24 @@ def process_image():
     # Create a temporary directory to save the uploaded image
     with tempfile.TemporaryDirectory() as tempdirO:
         tempdir = tempfile.mkdtemp()
+        filenamee = str(uuid.uuid4()) + '.jpeg'
+        testsave = os.path.join(tempdir, 'noncancer7/test/tumor_test/', file.filename.split('.')[0] +"_original_"+ filenamee)
+        trainsave = os.path.join(tempdir, 'noncancer7/train/no_tumor/', file.filename.split('.')[0][0:4] +"_original_"+ filenamee)
+        # try:
+        print(tempdir)
+        os.makedirs(tempdir + '/noncancer7/test/tumor_test/', exist_ok=True)
+        # os.mkdir(tempdir+ '/noncancer7/test/tumor_test/')
+        # except:
+        #     pass
+        # try:
+        os.makedirs(tempdir+ '/noncancer7/train/no_tumor/')
+        # except:
+        #     pass
+        file.save(testsave)
+        file.seek(0)
+        file.save(trainsave)
+        file.seek(0)
+        print("File saved")
         
         image_path = os.path.join(tempdir, filenamee)
         file.save(image_path)
@@ -317,6 +335,25 @@ def process_image():
         image.seek(0)
         image.save('noncancer7/train/tumor/'+ file.filename.split('.')[0] + filenamee)
         image.seek(0)
+        testsaveproc = tempdir + '/noncancer7/test/no_tumor_test/'
+        trainsaveproc = tempdir + '/noncancer7/train/tumor/'
+        
+        # try:
+        os.makedirs(testsaveproc, exist_ok=True)
+
+        # except:
+        #     pass
+        # try:
+        os.makedirs(trainsaveproc, exist_ok=True)
+
+        # except:
+        #     pass
+        
+        image.seek(0)
+        image.save(tempdir + '/noncancer7/test/no_tumor_test/'+ file.filename.split('.')[0] + filenamee)
+        image.seek(0)
+        image.save(tempdir + '/noncancer7/train/tumor/'+ file.filename.split('.')[0] + filenamee)
+        image.seek(0)
         
         
         # Convert processed image to base64 string
@@ -335,8 +372,8 @@ def process_image():
         test_img = []
         test_labels = []
 
-        path_train = 'noncancer7/train'
-        path_test = 'noncancer7/test'
+        path_train = str(tempdir+ '/noncancer7/train')
+        path_test = str(tempdir+ '/noncancer7/test')
 
         img_size = 128
 
