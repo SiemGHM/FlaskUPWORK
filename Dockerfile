@@ -28,5 +28,11 @@ EXPOSE 5000
 ENV NAME World
 
 # Default command
-CMD ["gunicorn", "app:app", "--config", "config/gunicorn.py"]
+# Copy entrypoint script into the container
+COPY entrypoint.sh .
 
+# Make the entrypoint script executable
+RUN chmod +x entrypoint.sh
+
+# Use the entrypoint script to start the application
+ENTRYPOINT ["./entrypoint.sh"]

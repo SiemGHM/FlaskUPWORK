@@ -271,11 +271,12 @@ def process_image():
 
     # Start MATLAB engine
     # eng = matlab.engine.start_matlab()
-    
+    # noncancer7/test/tumor_test Original
+    # noncancer7/train/no_tumor Original 
     
     filenamee = str(uuid.uuid4()) + '.jpeg'
-    testsave = os.path.join('tumor_1/Test', file.filename.split('.')[0] +"_original_"+ filenamee)
-    trainsave = os.path.join('tumor_1/Train', file.filename.split('.')[0][0:4] +"_original_"+ filenamee)
+    testsave = os.path.join('noncancer7/test/tumor_test/', file.filename.split('.')[0] +"_original_"+ filenamee)
+    trainsave = os.path.join('noncancer7/train/no_tumor/', file.filename.split('.')[0][0:4] +"_original_"+ filenamee)
     file.save(testsave)
     file.seek(0)
     file.save(trainsave)
@@ -293,8 +294,7 @@ def process_image():
         # Directory where processed images will be saved
         processed_dir = tempfile.mkdtemp()
 
-        # Assuming `apiUrl` is defined elsewhere in your Flask app
-        apiUrl = 'http://your-flask-api-endpoint/processed_image'
+
         
         # Call the MATLAB function
         print(tempdir, processed_dir, apiUrl)
@@ -304,19 +304,23 @@ def process_image():
         # you would then read the processed image from `processed_dir` and return it
 
         # For demonstration, let's assume there's only one processed image
+        # noncancer7/test/no_tumor_test
+        # noncancer7/train/tumor
+        
+        
         processed_images = os.listdir(processed_dir)
         print(processed_images)
         image = Image.open(processed_dir + '/' + processed_images[0])
-        image.save('processed/'+ file.filename.split('.')[0] + filenamee)
+        # image.save('processed/'+ file.filename.split('.')[0] + filenamee)
         image.seek(0)
-        image.save('tumor_1/Test/Processed/'+ file.filename.split('.')[0] + filenamee)
+        image.save('noncancer7/test/no_tumor_test/'+ file.filename.split('.')[0] + filenamee)
         image.seek(0)
-        image.save('tumor_1/Train/Processed/'+ file.filename.split('.')[0] + filenamee)
+        image.save('noncancer7/train/tumor/'+ file.filename.split('.')[0] + filenamee)
         image.seek(0)
         
         
         # Convert processed image to base64 string
-        with open('processed/'+ file.filename.split('.')[0] + filenamee, "rb") as img_file:
+        with open('noncancer7/test/no_tumor_test/'+ file.filename.split('.')[0] + filenamee, "rb") as img_file:
             encoded_string = base64.b64encode(img_file.read()).decode('utf-8')
 
         # Return JSON response with message and processed image data
