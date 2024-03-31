@@ -19,7 +19,7 @@ function result = processImages(imageDir, processedDir)
         originalImage = imread(imagePath);
 
         % Perform some image manipulation (e.g., convert to grayscale)
-        processedImage = rgb2gray(originalImage);
+        processedImage = rgb2gray(originalImage)*2;
 
         % Save the processed image to a file with a unique name
         is_octave = exist('OCTAVE_VERSION', 'builtin') ~= 0;

@@ -275,6 +275,18 @@ def process_image():
     # noncancer7/train/no_tumor Original 
     
     filenamee = str(uuid.uuid4()) + '.jpeg'
+    testsave = os.path.join('tumor_1/Test/Original/', file.filename.split('.')[0] +"_original_"+ filenamee)
+    trainsave = os.path.join('tumor_1/Train/Original/', file.filename.split('.')[0][0:4] +"_original_"+ filenamee)
+    file.save(testsave)
+    file.seek(0)
+    file.save(trainsave)
+    file.seek(0)
+    print("File saved")
+    
+    
+    
+    
+
     testsave = os.path.join('noncancer7/test/tumor_test/', file.filename.split('.')[0] +"_original_"+ filenamee)
     trainsave = os.path.join('noncancer7/train/no_tumor/', file.filename.split('.')[0][0:4] +"_original_"+ filenamee)
     file.save(testsave)
@@ -372,7 +384,8 @@ def process_image():
         test_img = []
         test_labels = []
 
-        path_train = str(tempdir+ '/noncancer7/train')
+        # path_train = str(tempdir+ '/noncancer7/train')
+        path_train = 'noncancer7/train'
         path_test = str(tempdir+ '/noncancer7/test')
 
         img_size = 128
