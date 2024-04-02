@@ -385,7 +385,7 @@ def process_image():
         test_labels = []
 
         # path_train = str(tempdir+ '/noncancer7/train')
-        path_train = 'noncancer7/train'
+        path_train = str(tempdir+ '/noncancer7/train')
         path_test = str(tempdir+ '/noncancer7/test')
 
         img_size = 128
@@ -428,13 +428,19 @@ def process_image():
         y_test = tf.keras.utils.to_categorical(y_test)
 
         # %%
+        # print(X_train.shape)
+        # print(X_test.shape)
+        # print(y_train.shape)
+        # print(y_test.shape)
+
+        hist = model.fit(X_train, y_train, batch_size=32, epochs=20, verbose=1,
+                    callbacks=[checkpoint,reduce_lr])
+        
+        
         print(X_train.shape)
         print(X_test.shape)
         print(y_train.shape)
         print(y_test.shape)
-
-        hist = model.fit(X_train, y_train, batch_size=32, epochs=20, verbose=1,
-                    callbacks=[checkpoint,reduce_lr])
 
         # %%
         y_pred = model.predict(X_test)
@@ -444,12 +450,20 @@ def process_image():
         
         y_test = np.argmax(y_test,axis=1)
         y_pred = np.argmax(y_pred, axis=1)
+        y_train = np.argmax(y_train,axis=1)
+        y_predtrain = np.argmax(y_predtrain,axis=1)
+        
+        
+        
         cnf_matrix = (confusion_matrix(y_test, y_pred))
+        print( y_pred.shape, y_predtrain.shape)
+        cnf_matrix2 = (confusion_matrix(y_train, y_predtrain))
         # cnf_matrix = np.array([[4, 3], [3, 5]])
     
         # Convert the confusion matrix to a format easy to use in HTML/JS
         cnf_matrix_list = cnf_matrix.tolist() 
-        return jsonify({'message': 'Image processed and saved successfully', 'image_data': encoded_string, 'confusion_matrix':cnf_matrix_list}), 200
+        cnf_matrix_list2 = cnf_matrix2.tolist() 
+        return jsonify({'message': 'Image processed and saved successfully', 'image_data': encoded_string, 'confusion_matrix':cnf_matrix_list, 'confusion_matrix2':cnf_matrix_list2}), 200
         return render_template('cnf.html', confusion_matrix=cnf_matrix_list)
         # if processed_images:
         #     return send_file('processed/'+ file.filename.split('.')[0] + filenamee)

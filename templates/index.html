@@ -62,31 +62,64 @@
               </div>
             </div>
             <!-- Confusion Matrix div, initially hidden -->
-            <div class="container mt-5 d-none" id="confusionMatrix">
-                <h1>Confusion Matrix</h1>
-                <table class="table matrix-table">
-                    <thead>
-                        <tr>
-                            <th>Predicted / Actual</th>
-                            <th>Predicted Negative</th>
-                            <th>Predicted Actual</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Actual Positive </td>
-                            <td> </td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Actual Negative (FP)</td>
-                            <td> </td>
-                            <td> </td>
-                        </tr>
-                        <!-- Add more rows here if you have more classes -->
-                    </tbody>
-                </table>
-            </div>
+            <div class="container mt-5 d-none" id="confusionMatrix2">
+              <h1>Confusion Matrix Train</h1>
+              <table class="table matrix-table">
+                  <thead>
+                      <tr>
+                          <th>Predicted / Actual</th>
+                          <th>Predicted Negative</th>
+                          <th>Predicted Actual</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td>Actual Positive </td>
+                          <td> </td>
+                          <td></td>
+                      </tr>
+                      <tr>
+                          <td>Actual Negative (FP)</td>
+                          <td> </td>
+                          <td> </td>
+                      </tr>
+                      <!-- Add more rows here if you have more classes -->
+                  </tbody>
+              </table>
+          </div>
+
+
+          <!-- Confusion Matrix div, initially hidden -->
+          <div class="container mt-5 d-none" id="confusionMatrix">
+            <h1>Confusion Matrix Test</h1>
+            <table class="table matrix-table2">
+                <thead>
+                    <tr>
+                        <th>Predicted / Actual</th>
+                        <th>Predicted Negative</th>
+                        <th>Predicted Actual</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Actual Positive </td>
+                        <td> </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Actual Negative (FP)</td>
+                        <td> </td>
+                        <td> </td>
+                    </tr>
+                    <!-- Add more rows here if you have more classes -->
+                </tbody>
+            </table>
+        </div>
+
+
+
+
+
           </div>
         </div>
       </div>
@@ -135,6 +168,26 @@
               // Remove 'd-none' class to display results and confusion matrix
               document.getElementById("imageResults").classList.remove("d-none");
               document.getElementById("confusionMatrix").classList.remove("d-none");
+
+              var matrix2 = data.confusion_matrix2;
+              document.querySelector(".matrix-table2 tbody").innerHTML = `
+                <tr>
+                  <td>Actual Positive</td>
+                  <td>${matrix2[0][0]}</td>
+                  <td>${matrix2[0][1]}</td>
+                </tr>
+                <tr>
+                  <td>Actual Negative</td>
+                  <td>${matrix2[1][0]}</td>
+                  <td>${matrix2[1][1]}</td>
+                </tr>
+                <!-- Add more rows dynamically if needed -->`;
+        
+              // Remove 'd-none' class to display results and confusion matrix
+              document.getElementById("imageResults").classList.remove("d-none");
+              document.getElementById("confusionMatrix2").classList.remove("d-none");
+
+              
             } else {
               alert(data.error);
             }
